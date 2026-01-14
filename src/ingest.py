@@ -10,7 +10,7 @@ from langchain_core.documents import Document
 from langchain_postgres import PGVector
 
 load_dotenv()
-from factory import get_embeddings
+from factory import get_embeddings, get_vector_store
 
 PDF_PATH = os_util.get_env("PDF_PATH")
 DATABASE_URL = os_util.get_env("DATABASE_URL")
@@ -57,13 +57,6 @@ def clean_documents(documents: list[Document]):
     return cleaned
 
 
-def get_vector_store(embeddings):
-    return PGVector(
-        embeddings=embeddings,
-        collection_name=PG_VECTOR_COLLECTION_NAME,
-        connection=DATABASE_URL,
-        use_jsonb=True,
-    )
 
 
 def doc_id_from_content(doc: Document) -> str:
